@@ -1,7 +1,20 @@
-import { platformBrowser } from '@angular/platform-browser';
-import { AppModule } from './app/app.module';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { bootstrapApplication, platformBrowser } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { routes } from './app/app-routing';
+import { importProvidersFrom } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { provideRouter } from '@angular/router';
 
-platformBrowser().bootstrapModule(AppModule, {
-  ngZoneEventCoalescing: true,
-})
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent,
+  {
+    providers: [
+      importProvidersFrom(
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ),
+    provideRouter(routes),
+    provideHttpClient(),
+  ],
+});
